@@ -1,0 +1,51 @@
+{
+  "name": "genpark-multimodal-spatial-audio-visual-grounding-skill",
+  "version": "1.0.0",
+  "description": "Real-time Multimodal Spatial Audio-Visual Grounding Engine (inspired by Meta Ray-Ban & Meta Muse). Fuses 2D/3D visual bounding boxes, user head-pose gaze vectors, and acoustic beamforming azimuth angles into cross-modal focal salience scores and resolves deictic spatial references.",
+  "tools": [
+    {
+      "name": "ground_spatial_sensory_stream",
+      "description": "Fuse visual detections with spatial acoustic beamforming, compute cross-modal focal salience, and resolve deictic spatial references.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "fuse_sensory_input",
+              "resolve_deictic_reference",
+              "track_focal_salience",
+              "get_grounding_state"
+            ],
+            "description": "Sensory grounding operation to execute."
+          },
+          "visual_detections": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "List of visual bounding boxes [x, y, w, h] normalized (0-1), label, confidence."
+          },
+          "audio_events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "List of acoustic events with azimuth_deg (-180 to 180), energy_db, label."
+          },
+          "head_pose": {
+            "type": "object",
+            "description": "User head-pose yaw, pitch, roll in degrees (default yaw=0, pitch=0)."
+          },
+          "deictic_utterance": {
+            "type": "string",
+            "description": "Deictic natural language query like 'look at that coffee cup' or 'what is making that noise on my left'."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ]
+}
